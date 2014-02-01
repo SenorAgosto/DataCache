@@ -36,4 +36,46 @@ namespace {
         MyObject object2;
         CHECK_EQUAL(3U, DataCache::OidGenerator::GetObjectId());
     }
+    
+    TEST_FIXTURE(ObjectIdFixture, verifyDataCacheOidCopyConstructor)
+    {
+        MyObject object;
+        CHECK_EQUAL(0U, object.oid());
+        
+        MyObject object2(object);
+        CHECK_EQUAL(1U, object2.oid());
+    }
+    
+    TEST_FIXTURE(ObjectIdFixture, verifyDataCacheOidMoveConstructor)
+    {
+        // rvalue MyObject should create an oid with value 0,
+        // the move constructor should subsequently assume ownership of
+        // that oid.
+        MyObject object( (MyObject()) );
+        CHECK_EQUAL(0U, object.oid());
+    }
+    
+    TEST_FIXTURE(ObjectIdFixture, verifyDataCacheOidAssignmentOperator)
+    {
+        MyObject object;
+        CHECK_EQUAL(0U, object.oid());
+        
+        MyObject object2 = object;
+        CHECK_EQUAL(1U, object2.oid());   // object2 is a copy and gets its own unique oid.
+    }
+    
+    TEST_FIXTURE(ObjectIdFixture, verifyDataCacheOidMoveAssignmentOperator)
+    {
+        MyObject object;
+        CHECK_EQUAL(0U, object.oid());
+        
+        MyObject object2;
+        CHECK_EQUAL(1U, object2.oid());
+        
+        object = MyObject();
+        CHECK_EQUAL(2U, object.oid());
+        
+        object = std::move(object2);
+        CHECK_EQUAL(1U, object.oid());
+    }
 }

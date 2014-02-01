@@ -1,0 +1,12 @@
+TODO: 
+
+- Create Compile Time counter to implement DataBlockId. Each time we instantiate a DataBlock<> object it has a new unique compile time "field ID". This field ID will be used to register the field with the DataCache. 
+
+- Answer the question of whether DataCache should be a singleton or not.
+  If it is not going to be a singleton, I think I'll have to figure out a way to
+  use variadic templates (or type lists) to instantiate it. So that it can create
+  all the contained DataBlockCollections for each field ID registered. I'll need 
+  a compile time mapping from field ID to field Type. 
+
+- Consider implementing a traits class for specifying the counter type. 
+  Defaulting to std::atomic<std::size_t> might be annoying for some users.

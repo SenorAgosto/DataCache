@@ -1,10 +1,9 @@
 #include <DataCache/DataCacheOid.hpp>
-#include "OidGenerator.hpp"
 
 namespace DataCache {
 
     DataCacheOid::DataCacheOid()
-        : oid_(OidGenerator::GetObjectId())
+        : oid_(Count() - 1)
     {
     }
 

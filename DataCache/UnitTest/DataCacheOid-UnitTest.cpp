@@ -1,13 +1,12 @@
 #include <UnitTest++/UnitTest++.h>
 #include <DataCache/DataCacheOid.hpp>
 
-#include <DataCache/Testing/OidGeneratorResetter.hpp>
+#include <DataCache/Testing/DataCacheOidResetter.hpp>
 
 namespace {
     
-    struct ObjectIdFixture
+    struct ObjectIdFixture : private DataCache::Testing::DataCacheOidResetter
     {
-        DataCache::Testing::OidGeneratorResetter oidResetter;
     };
     
     TEST(verifyObjectIdInstantiation)
@@ -24,16 +23,20 @@ namespace {
         CHECK_EQUAL(1U, id2.oid());
     }
     
-    class MyObject : DataCache::DataCacheOid
+    class MyObject : public DataCache::DataCacheOid
+    {
+    };
+    
+    class MyObject2 : public DataCache::DataCacheOid
     {
     };
     
     TEST_FIXTURE(ObjectIdFixture, verifyObjectsInheritingFromDataCacheOidIncrementOid)
     {
         MyObject object;
-        CHECK_EQUAL(1U, DataCache::OidGenerator::GetObjectId());
+        CHECK_EQUAL(0U, object.oid());
         
-        MyObject object2;
-        CHECK_EQUAL(3U, DataCache::OidGenerator::GetObjectId());
+        MyObject2 object2;
+        CHECK_EQUAL(1U, object2.oid());
     }
 }

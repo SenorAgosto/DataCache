@@ -12,34 +12,54 @@ namespace {
     struct MyCountedType2 : public DataCache::ObjectCounter<MyCountedType2>
     {
     };
-    
-    TEST(verifyObjectCounterInstantiationWithMultipleCountedTypes)
+
+    struct MyNoIncrementType : public DataCache::ObjectCounter<MyNoIncrementType>
     {
-        MyCountedType object;
-        CHECK_EQUAL(1U, object.Count());
+        using base_t = DataCache::ObjectCounter<MyNoIncrementType>;
         
-        MyCountedType2 object2;
-        CHECK_EQUAL(1U, object.Count());
-    }
+        MyNoIncrementType()
+            : base_t(DataCache::Details::NoIncrement())
+        {
+        }
+                         
+    };
     
     struct ObjectCountFixture
         : DataCache::Testing::ObjectCounterResetter<MyCountedType>
         , DataCache::Testing::ObjectCounterResetter<MyCountedType2>
     {
     };
+
+    TEST(verifyObjectCounterInstantiationWithMultipleCountedTypes)
+    {
+        MyCountedType object;
+        CHECK_EQUAL(1U, object.count());
+        
+        MyCountedType2 object2;
+        CHECK_EQUAL(1U, object.count());
+    }
     
     TEST_FIXTURE(ObjectCountFixture, verifyObjectCounter)
     {
         MyCountedType object;
-        CHECK_EQUAL(1U, object.Count());
+        CHECK_EQUAL(1U, object.count());
         
         MyCountedType2 object2;
-        CHECK_EQUAL(1U, object2.Count());
+        CHECK_EQUAL(1U, object2.count());
         
         MyCountedType object3;
-        CHECK_EQUAL(2U, object3.Count());
+        CHECK_EQUAL(2U, object3.count());
         
         MyCountedType2 object4;
-        CHECK_EQUAL(2U, object4.Count());
+        CHECK_EQUAL(2U, object4.count());
+    }
+    
+    TEST_FIXTURE(ObjectCountFixture, verifyObjectCounterNoIncrementConstructor)
+    {
+        MyNoIncrementType object;
+        CHECK_EQUAL(0U, object.count());
+        
+        MyNoIncrementType object2;
+        CHECK_EQUAL(0U, object2.count());
     }
 }

@@ -49,8 +49,9 @@ namespace {
     TEST_FIXTURE(ObjectIdFixture, verifyDataCacheOidMoveConstructor)
     {
         // rvalue MyObject should create an oid with value 0,
-        // the move constructor should subsequently assume ownership of
-        // that oid.
+        // The lvalue MyObject should create an oid with value 1,
+        // subsequently the move constructor should assume ownership of
+        // the rvalue object's oid.
         MyObject object( (MyObject()) );
         CHECK_EQUAL(0U, object.oid());
     }
@@ -72,7 +73,7 @@ namespace {
         MyObject object2;
         CHECK_EQUAL(1U, object2.oid());
         
-        object = MyObject();
+        object = MyObject();            // the rvalue MyObject creates new oid, then we assume it.
         CHECK_EQUAL(2U, object.oid());
         
         object = std::move(object2);

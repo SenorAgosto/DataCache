@@ -33,22 +33,34 @@ namespace DataCache {
         template<typename FieldType>
         std::size_t register_field(void);
 
+        // Returns a const collection of fields that can be iterated over enmass.
         template<typename FieldType>
         const Details::DataBlockCollection<FieldType>& get_collection(const std::size_t fieldId) const;
         
+        // Returns a collection of fields that can be iterated over to manipulate enmass.
         template<typename FieldType>
         Details::DataBlockCollection<FieldType>& get_collection(const std::size_t fieldId);
         
+        // Returns a const reference to a specific field for an object (referenced by OID).
         template<typename FieldType>
         const FieldType& get(const std::size_t oid, const std::size_t fieldId) const;
         
+        // Returns a reference to a specific field for an object (referenced by OID).
         template<typename FieldType>
         FieldType& get(const std::size_t oid, const std::size_t fieldId);
         
+        // Inserts an object into the DataCache.
+        //
+        // @return the oid of the object. The OID is used to by the object to
+        // access data member fields stored in the cache.
+        template<class BaseType>
+        std::size_t create_object(void);
+        
     private:
         friend class Testing::DataCacheAccessor;
-        std::size_t next_id() const;
-
+        std::size_t next_field_id() const;
+        std::size_t next_oid() const;
+        
     private:
         using FieldId = std::size_t;
         using BlockCollectionHandle = std::unique_ptr<Details::DataBlockCollectionInterface>;
@@ -58,8 +70,10 @@ namespace DataCache {
     template<typename FieldType>
     std::size_t DataCache::register_field(void)
     {
-        auto fieldId = next_id();
-        blockMap_.emplace(fieldId, BlockCollectionHandle(new Details::DataBlockCollection<FieldType>()));
+        BlockCollectionHandle handle(new Details::DataBlockCollection<FieldType>());
+        
+        auto fieldId = next_field_id();
+        blockMap_.emplace(fieldId, std::move(handle));
         
         return fieldId;
     }
@@ -104,4 +118,24 @@ namespace DataCache {
         return collection[oid];
     }
 
+    template<class BaseType>
+    std::size_t DataCache::create_object(void)
+    {
+        // [ARG]:
+        // Some careful consideration needs to be put in here.
+        // Possibly moving some of the logic here to a policy so it can be overriden.
+        // Currently, we are just going to create_object through the base class BlockCollectionHandle.
+        // However, it could be possible to something fancier... where we don't necessarily allocate
+        // space in every collection but allocate based on the object type.
+        //
+        // For now, however, to get things up and working, simply add a spot in every collection.
+        std::size_t oid = next_oid();
+        
+        std::for_each(begin(blockMap_), end(blockMap_), [oid](BlockCollectionHandle& collection)
+        {
+            //collection->create_object(oid);
+        });
+        
+        return oid;
+    }
 }

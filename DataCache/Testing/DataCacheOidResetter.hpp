@@ -6,7 +6,7 @@ namespace DataCache { namespace Testing {
     // A convenience wrapper around ObjectCounter<CountAllObjects>
     // so client unit test implementers don't have to remember
     // to use the DataCache::CountAllObjects tag type.
-    class DataCacheOidResetter : public ObjectCounterResetter<Details::CountAllObjects>
+    class DataCacheOidResetter : public ObjectCounterResetter<DataCacheOid>
     {
     };
 }}

@@ -20,13 +20,7 @@ namespace DataCache {
     {
     public:
         // Create an entry in the DataCache, type is FieldType and
-        // TODO: cull FieldOwner?? I'm thinking I probably need this
-        // for invoking a create function on DataCache... when we are
-        // registering fields we need to insert the registered fieldID
-        // into a map keyed off FieldOwner... so when we need to create
-        // a new object we can ask the DataStore to allocate a spot for
-        // each field... or do this lazily when accessing??
-        template<class FieldOwner, typename FieldType>
+        template<typename FieldType>
         static void register_field(const std::size_t fieldId)
         {
             auto registeredFieldId = cache_->register_field<FieldType>();

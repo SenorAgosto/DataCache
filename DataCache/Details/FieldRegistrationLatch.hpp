@@ -12,7 +12,7 @@ namespace DataCache { namespace Details {
     public:
         FieldRegistrationLatch(const std::size_t fieldId)
         {
-            BaseType::template register_field<BaseType, FieldType>(fieldId);
+            BaseType::template register_field<FieldType>(fieldId);
         }
     };
 }}

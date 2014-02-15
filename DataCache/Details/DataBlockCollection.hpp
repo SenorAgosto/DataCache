@@ -14,6 +14,9 @@ namespace DataCache { namespace Details {
         
         // do not expose push()
         
+        // Insert 
+        void create_object(const std::size_t oid);
+        
         
         inline bool empty(void) const;
         

@@ -10,4 +10,9 @@ namespace DataCache { namespace Exception {
         AccessingUnRegisteredFieldId(const std::size_t fieldId);
     };
     
+    class OidOutOfRange : public std::range_error
+    {
+    public:
+        OidOutOfRange(const std::size_t oid);
+    };
 }}

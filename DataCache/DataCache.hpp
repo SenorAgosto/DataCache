@@ -133,7 +133,7 @@ namespace DataCache {
         
         std::for_each(begin(blockMap_), end(blockMap_), [oid](BlockCollectionHandle& collection)
         {
-            //collection->create_object(oid);
+            collection->create_object(oid);
         });
         
         return oid;

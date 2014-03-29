@@ -1,5 +1,6 @@
 #include <UnitTest++/UnitTest++.h>
 #include <DataCache/Details/DataBlockCollection.hpp>
+#include <DataCache/Exception/Exceptions.hpp>
 
 #include <cstdint>
 #include <numeric>
@@ -35,13 +36,19 @@ namespace {
     TEST_FIXTURE(DataBlockCollectionFixture, verifyCreationThrowsIfOIDsHaveGaps)
     {
         collection.create_object(0);
-        CHECK_THROW(collection.create_object(20), DataCache::Exception::OidOutOfRange);
+        
+        #ifdef DEBUG
+            CHECK_THROW(collection.create_object(20), DataCache::Exception::OidOutOfRange);
+        #endif
     }
 
     TEST_FIXTURE(DataBlockCollectionFixture, verifyCreationThrowsIfOidIsDuplicate)
     {
         collection.create_object(0);
-        CHECK_THROW(collection.create_object(0), DataCache::Exception::OidOutOfRange);
+        
+        #ifdef DEBUG
+            CHECK_THROW(collection.create_object(0), DataCache::Exception::OidOutOfRange);
+        #endif
     }
 
     TEST_FIXTURE(DataBlockCollectionFixture, verifyIteratorsBeginAndEnd)

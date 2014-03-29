@@ -1,6 +1,6 @@
 #pragma once
 #include <DataCache/Details/DataBlockCollectionInterface.hpp>
-#include <DataCache/Exception/Exceptions.hpp>
+#include <DataCache/Details/DebugHelpers.hpp>
 
 #include <deque>
 
@@ -31,14 +31,16 @@ namespace DataCache { namespace Details {
         const FieldType& at(const std::size_t location) const;
         FieldType& at(const std::size_t location);
         
-        // Insert a data block into the collection.
-        void create_object(const std::size_t oid) override;
-        
         // True if collection is empty.
         inline bool empty(void) const;
         
         // Returns the current size of the collection.
         inline std::size_t size(void) const;
+        
+        
+        
+        // Insert a data block into the collection.
+        void create_object(const std::size_t oid) override;
         
     private:
         BlocksContainer blocks_;
@@ -104,25 +106,6 @@ namespace DataCache { namespace Details {
         return blocks_.at(location);
     }
     
-    
-    template<typename FieldType>
-    void DataBlockCollection<FieldType>::create_object(const std::size_t oid)
-    {
-        // Debug Only???
-        if(oid < blocks_.size())
-        {
-            throw Exception::OidOutOfRange(oid);
-        }
-        
-        blocks_.emplace_back();
-        
-        // Debug Only???
-        if(blocks_.size() <= oid)
-        {
-            throw Exception::OidOutOfRange(oid);
-        }
-    }
-    
     template<typename FieldType>
     bool DataBlockCollection<FieldType>::empty(void) const
     {
@@ -133,5 +116,15 @@ namespace DataCache { namespace Details {
     std::size_t DataBlockCollection<FieldType>::size(void) const
     {
         return blocks_.size();
+    }
+    
+    template<typename FieldType>
+    void DataBlockCollection<FieldType>::create_object(const std::size_t oid)
+    {
+        CheckNonDuplicateOidWhenInDebug(oid, blocks_.size());
+        
+        blocks_.emplace_back();
+        
+        CheckOidIncreasedByOneInDebug(blocks_.size(), oid);
     }
 }}

@@ -12,21 +12,24 @@ namespace DataCache { namespace Details {
     {
     public:
         using BlocksContainer = std::deque<FieldType>;
-        
-        // TODO:
-        // begin/end
+
+        // begin iterators
         typename BlocksContainer::iterator begin(void);
         typename BlocksContainer::const_iterator begin(void) const;
         typename BlocksContainer::const_iterator cbegin(void) const;
         
+        // end iterators
         typename BlocksContainer::iterator end(void);
         typename BlocksContainer::const_iterator end(void) const;
         typename BlocksContainer::const_iterator cend(void) const;
         
-        // operator[]   (get specific object without range checking).
-        // at() (get specific object with range checking).
+        // operator[] without range checking.
+        const FieldType& operator[](const std::size_t location) const;
+        FieldType& operator[](const std::size_t location);
         
-        // do not expose push()
+        // at() with range checking...
+        const FieldType& at(const std::size_t location) const;
+        FieldType& at(const std::size_t location);
         
         // Insert a data block into the collection.
         void create_object(const std::size_t oid) override;
@@ -76,6 +79,31 @@ namespace DataCache { namespace Details {
     {
         return blocks_.cend();
     }
+
+    template<typename FieldType>
+    const FieldType& DataBlockCollection<FieldType>::operator[](const std::size_t location) const
+    {
+        return blocks_[location];
+    }
+    
+    template<typename FieldType>
+    FieldType& DataBlockCollection<FieldType>::operator[](const std::size_t location)
+    {
+        return blocks_[location];
+    }
+    
+    template<typename FieldType>
+    const FieldType& DataBlockCollection<FieldType>::at(const std::size_t location) const
+    {
+        return blocks_.at(location);
+    }
+    
+    template<typename FieldType>
+    FieldType& DataBlockCollection<FieldType>::at(const std::size_t location)
+    {
+        return blocks_.at(location);
+    }
+    
     
     template<typename FieldType>
     void DataBlockCollection<FieldType>::create_object(const std::size_t oid)

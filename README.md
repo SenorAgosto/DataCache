@@ -8,7 +8,7 @@ This is a simple toolkit for implementing Data Oriented Designs in C++.
 
 ## Authors
 
-Austin Gilbert <ceretullis@github.com>
+Austin Gilbert <paxos1977@github.com>
 
 ## Copyright and License
 

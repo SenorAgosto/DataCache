@@ -2,6 +2,7 @@
 #include <DataCache/Details/DataBlockCollection.hpp>
 
 #include <cstdint>
+#include <numeric>
 
 namespace {
     
@@ -14,6 +15,7 @@ namespace {
     struct DataBlockCollectionFixture
     {
         DataCache::Details::DataBlockCollection<MyTestFieldType> collection;
+        DataCache::Details::DataBlockCollection<uint64_t> accum_collection;
     };
     
     TEST_FIXTURE(DataBlockCollectionFixture, verifyInstantiationOfDataBlockCollection)
@@ -74,5 +76,35 @@ namespace {
             // normally this would be an interesting calculation.
             total += field.part_1 + field.part_2;
         });
+    }
+    
+    TEST_FIXTURE(DataBlockCollectionFixture, verifyNonConstAndConstBracketOperator)
+    {
+        accum_collection.create_object(0);
+        accum_collection.create_object(1);
+        
+        accum_collection[0] = 10;
+        accum_collection[1] = 20;
+        
+        auto total = std::accumulate(accum_collection.begin(), accum_collection.end(), 0);
+        CHECK_EQUAL(30, total);
+        
+        const auto& object = accum_collection[0];
+        CHECK_EQUAL(10, object);
+    }
+    
+    TEST_FIXTURE(DataBlockCollectionFixture, verifyNonConstAndConstAtFunction)
+    {
+        accum_collection.create_object(0);
+        accum_collection.create_object(1);
+        
+        accum_collection.at(0) = 10;
+        accum_collection.at(1) = 20;
+        
+        auto total = std::accumulate(accum_collection.begin(), accum_collection.end(), 0);
+        CHECK_EQUAL(30, total);
+        
+        const auto& object = accum_collection.at(0);
+        CHECK_EQUAL(10, object);
     }
 }

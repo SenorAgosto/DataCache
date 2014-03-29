@@ -40,6 +40,11 @@ namespace DataCache { namespace Details {
         
         
         // Insert a data block into the collection.
+        //
+        // We pass <oid> here because future implementations
+        // of DataCache may use sparse collections to avoid
+        // allocating memory when the allocated object is
+        // not the correct type. Or something like that.
         void create_object(const std::size_t oid) override;
         
     private:

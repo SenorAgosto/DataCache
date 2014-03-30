@@ -92,19 +92,15 @@ namespace {
         // determine that a field with our expected type was registered.
     }
     
-    // Note: This test only works in the interim. We have to create an object
-    // to get the fields registered... but once I'm actually making entries
-    // in the DataCache for created objects... the test for empty collection
-    // will fail.
     TEST_FIXTURE(DataCacheFixture, verifyDataCacheConstCollection)
     {
         const auto& field1_collection = MyOtherObject::const_collection<uint32_t>(field_1);
-        CHECK(field1_collection.empty());
+        CHECK(!field1_collection.empty());  // not equal because we created one on line 74
     }
     
     TEST_FIXTURE(DataCacheFixture, verifyDataCacheCollection)
     {
         auto& field2_collection = MyOtherObject::collection<uint32_t>(field_2);
-        CHECK(field2_collection.empty());
+        CHECK(!field2_collection.empty());  // not equal because we created one on line 74
     }
 }

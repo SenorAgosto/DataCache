@@ -64,7 +64,9 @@ namespace DataCache {
     private:
         using FieldId = std::size_t;
         using BlockCollectionHandle = std::unique_ptr<Details::DataBlockCollectionInterface>;
-        std::unordered_map<FieldId, BlockCollectionHandle> blockMap_;
+        using BlockMapType = std::unordered_map<FieldId, BlockCollectionHandle>;
+        
+        BlockMapType blockMap_;
     };
     
     template<typename FieldType>
@@ -131,9 +133,10 @@ namespace DataCache {
         // For now, however, to get things up and working, simply add a spot in every collection.
         std::size_t oid = next_oid();
         
-        std::for_each(begin(blockMap_), end(blockMap_), [oid](BlockCollectionHandle& collection)
+        std::for_each(begin(blockMap_), end(blockMap_), [oid](BlockMapType::value_type& pair)
         {
-            collection->create_object(oid);
+            auto& collection_handle = pair.second;
+            collection_handle->create_object(oid);
         });
         
         return oid;

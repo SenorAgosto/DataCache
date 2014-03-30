@@ -75,8 +75,14 @@ namespace DataCache {
     protected:
         // Add an entry in the DataCache for this object type.
         UsingDataCacheIn()
+            : oid_(cache_->create_object<BaseType>())
         {
-            //cache_->create<BaseType>();
+        }
+        
+        // Return our object's oid.
+        std::size_t oid(void) const
+        {
+            return oid_;
         }
         
     private:
@@ -97,9 +103,16 @@ namespace DataCache {
             return registeredFieldId;
         }
 
+    // instance data
+    private:
+        std::size_t oid_;
+    
+    // static data
     private:
         static DataCache* cache_;
         
+        // Map LocalFieldId's to RegisteredFieldIds.
+        // TODO: possibly move this to a policy.
         using RegisteredFieldId = std::size_t;
         using LocalFieldId = std::size_t;
         static std::unordered_map<LocalFieldId, RegisteredFieldId> fieldIdMap_;

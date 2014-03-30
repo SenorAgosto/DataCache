@@ -4,49 +4,51 @@ This is a simple toolkit for implementing Data Oriented Designs in C++.
 
 ## Usage
 
-	// For convenience, declare an enum for field names.
-	enum MyFields {
-		field_1,
-		field_2
-	};
+	// Use a traits class to hold mapping of field name to type.
+	struct Fields
+	{
+		// define field names
+		enum MyFields {
+			field_1,
+			field_2
+		};
 
+		// define field types
+		using field_1_type = uint64_t;
+		using field_2_type = uint32_t;
+	};
+	
     // Declare a type using the DataCache
     struct MyObject
         : public DataCache::UsingDataCacheIn<MyObject>
-        , public DataCache::DataBlock<MyObject, field_1, uint64_t>
-        , public DataCache::DataBlock<MyObject, field_2, uint32_t>
+        , public DataCache::DataBlock<MyObject, Fields::field_1, Fields::field_1_type>
+        , public DataCache::DataBlock<MyObject, Fields::field_2, Fields::field_2_type>
     {
+    	void Foo(void);
     };
 
 This bit of code will create a data cache for MyObject fields. A couple of things to note, you must inherit from DataCache::UsingDataCacheIn prior to defining DataCache::DataBlock entries.
 
 Two data caches will be created, one for holding field_1 values for all instances of MyObject, a second for field_2. The point of using Data Oriented Design is to efficiently apply functions on _all_ instances of a class. To do this using DataCache toolbox, request a collection and then simply iterate through it.
 
-    auto collection = MyObject::collection<uint64_t>(field_1);
-    std::for_each(collection.begin(), collection.end(), [](uint64_t value)
+    auto& collection = MyObject::collection<Fields::field_1_type>(Fields::field_1);
+    std::for_each(begin(collection), end(collection), [](uint64_t value)
     {
     	// do something useful...
     });
 
 This toolkit allows us to mix paradigms easily. Given an object instance, you can still use member methods in the normal object oriented ways.
 
-    // Declare a type using the DataCache
-    struct MyObject
-        : public DataCache::UsingDataCacheIn<MyObject>
-        , public DataCache::DataBlock<MyObject, field_1, uint64_t>
-        , public DataCache::DataBlock<MyObject, field_2, uint32_t>
-    {
-    	void Foo(void)
-    	{
-    		// the only inconvenience is we have to use our OID to 
-    		// get the location of our fields we want to modify here.
-    		auto& field1 = get(oid(), field_1);
-    		auto& field2 = get(oid(), field_2);
+	void MyObject::Foo(void)
+	{
+		// the only inconvenience is we have to use our OID to 
+		// get the location of our fields we want to modify here.
+		auto& field1 = get(oid(), Fields::field_1);
+		auto& field2 = get(oid(), Fields::field_2);
 
-    		field1 += field2;
-    		field2 /= 2;
-    	}
-    };
+		field1 += field2;
+		field2 /= 2;
+	}
 
 Potentially, you could mix the member data between the data cache and unorganized heap as well, though we're not sure you really want to do that. If you really want to go that route, I'd recommend a related class with a has-a relationship to separate what is in the DataCache and what isn't.
 

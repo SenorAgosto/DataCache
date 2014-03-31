@@ -5,6 +5,7 @@
 #include <DataCache/UsingDataCacheIn.hpp>
 
 #include <DataCache/Testing/DataCacheAccessor.hpp>
+#include <DataCache/Testing/UsingDataCacheInAccessor.hpp>
 
 #include <cstdint>
 
@@ -77,19 +78,23 @@ namespace {
     
     TEST_FIXTURE(DataCacheFixture, verifyRegistrationOfDataBlock)
     {
-//        MyObject object;
-//        CHECK_EQUAL(0U, object.registeredId(field_1));
-//        
-//        MyObject objectB;
-//        CHECK_EQUAL(0U, objectB.registeredId(field_1));
-//        
-//        MyOtherObject object2;
-//        CHECK_EQUAL(1U, object2.registeredId(field_1));
-//        CHECK_EQUAL(2U, object2.registeredId(field_2));
+        MyObject object;
+        DataCache::Testing::UsingDataCacheInAccessor<MyObject> accessor(object);
+        CHECK_EQUAL(0U, accessor.registered_id(field_1));
+        
+        MyObject objectB;
+        DataCache::Testing::UsingDataCacheInAccessor<MyObject> accessor2(objectB);
+        CHECK_EQUAL(0U, accessor2.registered_id(field_1));
+        
+        MyOtherObject object2;
+        DataCache::Testing::UsingDataCacheInAccessor<MyOtherObject> accessor3(object2);
+        CHECK_EQUAL(1U, accessor3.registered_id(field_1));
+        CHECK_EQUAL(2U, accessor3.registered_id(field_2));
         
         // TODO:
         // use the accessor to look under the covers of the DataCache to
         // determine that a field with our expected type was registered.
+
     }
     
     TEST_FIXTURE(DataCacheFixture, verifyDataCacheConstCollection)

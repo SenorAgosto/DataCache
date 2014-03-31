@@ -6,6 +6,12 @@
 
 #include <unordered_map>
 
+namespace DataCache { namespace Testing {
+    
+    template<class BaseType>
+    class UsingDataCacheInAccessor;
+}}
+
 namespace DataCache {
     
     // A mixin indicating use of DataCache by a client class.
@@ -109,6 +115,8 @@ namespace DataCache {
     
     // static data
     private:
+        template<class AccessorBaseType> friend class Testing::UsingDataCacheInAccessor;
+        
         static DataCache* cache_;
         
         // Map LocalFieldId's to RegisteredFieldIds.

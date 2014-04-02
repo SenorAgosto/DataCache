@@ -1,5 +1,6 @@
 TODO: 
 - Take code from READEME.md and put in a unit test so we know this code works. 
+- Make RegisterFieldLatch an inline friend to UsingDataCacheIn so that UsingDataCacheIn can be made protected/private. 
 
 - Create Compile Time counter to implement DataBlockId. Each time we instantiate a DataBlock<> object it has a new unique compile time "field ID". This field ID will be used to register the field with the DataCache. 
 

@@ -16,6 +16,8 @@ namespace DataCache { namespace Details {
         using iterator = typename BlocksContainer::iterator;
         using const_iterator = typename BlocksContainer::const_iterator;
         
+        DataBlockCollection();
+        
         // begin iterators
         iterator begin(void);
         const_iterator begin(void) const;
@@ -53,6 +55,11 @@ namespace DataCache { namespace Details {
     private:
         BlocksContainer blocks_;
     };
+    
+    template<typename FieldType>
+    DataBlockCollection<FieldType>::DataBlockCollection()
+    {
+    }
     
     template<typename FieldType>
     typename DataBlockCollection<FieldType>::iterator DataBlockCollection<FieldType>::begin(void)
@@ -134,5 +141,33 @@ namespace DataCache { namespace Details {
         blocks_.emplace_back();
         
         CheckOidIncreasedByOneInDebug(blocks_.size(), oid);
+    }
+    
+    // Free-Function begin()
+    template<typename FieldType>
+    inline typename DataBlockCollection<FieldType>::iterator begin(DataBlockCollection<FieldType>& collection)
+    {
+        return collection.begin();
+    }
+    
+    // Free-Function const begin()
+    template<typename FieldType>
+    inline typename DataBlockCollection<FieldType>::const_iterator begin(const DataBlockCollection<FieldType>& collection)
+    {
+        return collection.cbegin();
+    }
+    
+    // Free-Function end()
+    template<typename FieldType>
+    inline typename DataBlockCollection<FieldType>::iterator end(DataBlockCollection<FieldType>& collection)
+    {
+        return collection.end();
+    }
+    
+    // Free-Function const end()
+    template<typename FieldType>
+    inline typename DataBlockCollection<FieldType>::const_iterator end(const DataBlockCollection<FieldType>& collection)
+    {
+        return collection.cend();
     }
 }}

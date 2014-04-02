@@ -76,7 +76,7 @@ namespace {
         MyGroupedDataObject groupedObject;
     }
     
-    TEST_FIXTURE(DataCacheFixture, verifyRegistrationOfDataBlock)
+    TEST_FIXTURE(DataCacheFixture, verifyRegistrationOfDataBlockTypes)
     {
         MyObject object;
         DataCache::Testing::UsingDataCacheInAccessor<MyObject> accessor(object);
@@ -90,11 +90,6 @@ namespace {
         DataCache::Testing::UsingDataCacheInAccessor<MyOtherObject> accessor3(object2);
         CHECK_EQUAL(1U, accessor3.registered_id(field_1));
         CHECK_EQUAL(2U, accessor3.registered_id(field_2));
-        
-        // TODO:
-        // use the accessor to look under the covers of the DataCache to
-        // determine that a field with our expected type was registered.
-
     }
     
     TEST_FIXTURE(DataCacheFixture, verifyDataCacheConstCollection)

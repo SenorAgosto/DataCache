@@ -1,10 +1,16 @@
 #pragma once
-#include <DataCache/DataCache.hpp>
+#include <DataCache/Details/DataCache.hpp>
 #include <DataCache/Details/DefaultDataCache.hpp>
 #include <DataCache/Details/DataCacheSetter.hpp>
 #include <DataCache/Exception/Exceptions.hpp>
 
 #include <unordered_map>
+
+namespace DataCache { namespace Testing {
+    
+    template<class BaseType>
+    class UsingDataCacheInAccessor;
+}}
 
 namespace DataCache {
     
@@ -61,13 +67,13 @@ namespace DataCache {
         //
         // This can be called only once per program, and must
         // happen prior to any BaseType allocations.
-        static void SetDataCache(DataCache& cache)
+        static void SetDataCache(Details::DataCache& cache)
         {
             static Details::DataCacheSetter setter(cache_, cache);
         }
         
         // Return a reference to our DataCache
-        static DataCache& GetDataCache(void)
+        static Details::DataCache& GetDataCache(void)
         {
             return *cache_;
         }
@@ -109,7 +115,9 @@ namespace DataCache {
     
     // static data
     private:
-        static DataCache* cache_;
+        template<class AccessorBaseType> friend class Testing::UsingDataCacheInAccessor;
+        
+        static Details::DataCache* cache_;
         
         // Map LocalFieldId's to RegisteredFieldIds.
         // TODO: possibly move this to a policy.
@@ -119,7 +127,7 @@ namespace DataCache {
     };
     
     template<class BaseType>
-    DataCache* UsingDataCacheIn<BaseType>::cache_ = &(Details::DefaultDataCache());
+    Details::DataCache* UsingDataCacheIn<BaseType>::cache_ = &(Details::DefaultDataCache());
     
     template<class BaseType>
     std::unordered_map<std::size_t, std::size_t> UsingDataCacheIn<BaseType>::fieldIdMap_;

@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <numeric>
+#include <vector>
 
 namespace {
     
@@ -113,5 +114,26 @@ namespace {
         
         const auto& object = accum_collection.at(0);
         CHECK_EQUAL(10, object);
+    }
+    
+    TEST_FIXTURE(DataBlockCollectionFixture, verifyFreeBeginAndEndFunctions)
+    {
+        uint64_t total = 0;
+        std::for_each(begin(collection), end(collection), [&total](MyTestFieldType& field)
+        {
+            field.part_1 = 0;
+        });
+    }
+    
+    TEST(verifyFreeConstBeginAndConstEndFunctions)
+    {
+        uint64_t total = 0;
+        
+        // Ensure const versions of begin() and end() work.
+        const DataCache::Details::DataBlockCollection<MyTestFieldType> collection2;
+        std::for_each(begin(collection2), end(collection2), [&total](const MyTestFieldType& field)
+        {
+            total += field.part_2;
+        });
     }
 }

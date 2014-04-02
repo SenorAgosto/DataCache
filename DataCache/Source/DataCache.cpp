@@ -1,8 +1,8 @@
-#include <DataCache/DataCache.hpp>
+#include <DataCache/Details/DataCache.hpp>
 #include "RegisteredFieldId.hpp"
 #include "DataCacheOid.hpp"
 
-namespace DataCache {
+namespace DataCache { namespace Details {
     
     std::size_t DataCache::next_field_id(void) const
     {
@@ -13,4 +13,4 @@ namespace DataCache {
     {
         return DataCacheOid();
     }
-}
+}}

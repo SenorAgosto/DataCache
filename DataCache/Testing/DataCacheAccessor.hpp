@@ -1,8 +1,8 @@
 #pragma once
 
-namespace DataCache {
+namespace DataCache { namespace Details {
     class DataCache;
-}
+}}
 
 namespace DataCache { namespace Testing {
 
@@ -10,10 +10,10 @@ namespace DataCache { namespace Testing {
     class DataCacheAccessor
     {
     public:
-        DataCacheAccessor(DataCache& cache);
+        DataCacheAccessor(Details::DataCache& cache);
         void clear(void);
 
     private:
-        DataCache& cache_;
+        Details::DataCache& cache_;
     };
 }}

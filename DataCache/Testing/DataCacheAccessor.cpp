@@ -1,9 +1,9 @@
 #include <DataCache/Testing/DataCacheAccessor.hpp>
-#include <DataCache/DataCache.hpp>
+#include <DataCache/Details/DataCache.hpp>
 
 namespace DataCache { namespace Testing {
     
-    DataCacheAccessor::DataCacheAccessor(DataCache& cache)
+    DataCacheAccessor::DataCacheAccessor(Details::DataCache& cache)
         : cache_(cache)
     {
     }

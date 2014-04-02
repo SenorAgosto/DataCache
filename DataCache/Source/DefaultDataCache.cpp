@@ -1,5 +1,5 @@
 #include <DataCache/Details/DefaultDataCache.hpp>
-#include <DataCache/DataCache.hpp>
+#include <DataCache/Details/DataCache.hpp>
 
 namespace DataCache { namespace Details {
   

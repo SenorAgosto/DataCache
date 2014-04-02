@@ -13,15 +13,18 @@ namespace DataCache { namespace Details {
     public:
         using BlocksContainer = std::deque<FieldType>;
 
+        using iterator = typename BlocksContainer::iterator;
+        using const_iterator = typename BlocksContainer::const_iterator;
+        
         // begin iterators
-        typename BlocksContainer::iterator begin(void);
-        typename BlocksContainer::const_iterator begin(void) const;
-        typename BlocksContainer::const_iterator cbegin(void) const;
+        iterator begin(void);
+        const_iterator begin(void) const;
+        const_iterator cbegin(void) const;
         
         // end iterators
-        typename BlocksContainer::iterator end(void);
-        typename BlocksContainer::const_iterator end(void) const;
-        typename BlocksContainer::const_iterator cend(void) const;
+        iterator end(void);
+        const_iterator end(void) const;
+        const_iterator cend(void) const;
         
         // operator[] without range checking.
         const FieldType& operator[](const std::size_t location) const;
@@ -52,37 +55,37 @@ namespace DataCache { namespace Details {
     };
     
     template<typename FieldType>
-    typename DataBlockCollection<FieldType>::BlocksContainer::iterator DataBlockCollection<FieldType>::begin(void)
+    typename DataBlockCollection<FieldType>::iterator DataBlockCollection<FieldType>::begin(void)
     {
         return blocks_.begin();
     }
     
     template<typename FieldType>
-    typename DataBlockCollection<FieldType>::BlocksContainer::const_iterator DataBlockCollection<FieldType>::begin(void) const
+    typename DataBlockCollection<FieldType>::const_iterator DataBlockCollection<FieldType>::begin(void) const
     {
         return blocks_.begin();
     }
     
     template<typename FieldType>
-    typename DataBlockCollection<FieldType>::BlocksContainer::const_iterator DataBlockCollection<FieldType>::cbegin(void) const
+    typename DataBlockCollection<FieldType>::const_iterator DataBlockCollection<FieldType>::cbegin(void) const
     {
         return blocks_.cbegin();
     }
     
     template<typename FieldType>
-    typename DataBlockCollection<FieldType>::BlocksContainer::iterator DataBlockCollection<FieldType>::end(void)
+    typename DataBlockCollection<FieldType>::iterator DataBlockCollection<FieldType>::end(void)
     {
         return blocks_.end();
     }
     
     template<typename FieldType>
-    typename DataBlockCollection<FieldType>::BlocksContainer::const_iterator DataBlockCollection<FieldType>::end(void) const
+    typename DataBlockCollection<FieldType>::const_iterator DataBlockCollection<FieldType>::end(void) const
     {
         return blocks_.end();
     }
     
     template<typename FieldType>
-    typename DataBlockCollection<FieldType>::BlocksContainer::const_iterator DataBlockCollection<FieldType>::cend(void) const
+    typename DataBlockCollection<FieldType>::const_iterator DataBlockCollection<FieldType>::cend(void) const
     {
         return blocks_.cend();
     }

@@ -19,11 +19,12 @@ This is a simple toolkit for implementing Data Oriented Designs in C++.
 	};
 	
     // Declare a type using the DataCache
-    struct MyObject
+    class MyObject
         : public DataCache::UsingDataCacheIn<MyObject>
         , public DataCache::DataBlock<MyObject, Fields::field_1, Fields::field_1_type>
         , public DataCache::DataBlock<MyObject, Fields::field_2, Fields::field_2_type>
     {
+    public:
     	void Foo(void);
     };
 

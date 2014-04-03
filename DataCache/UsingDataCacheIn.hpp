@@ -6,6 +6,12 @@
 
 #include <unordered_map>
 
+namespace DataCache { namespace Details {
+
+    template<class AccessorBaseType, typename AccessorFieldType>
+    class FieldRegistrationLatch;
+}}
+
 namespace DataCache { namespace Testing {
     
     template<class BaseType>
@@ -25,14 +31,6 @@ namespace DataCache {
     class UsingDataCacheIn
     {
     public:
-        // Create an entry in the DataCache, type is FieldType and
-        template<typename FieldType>
-        static void register_field(const std::size_t fieldId)
-        {
-            auto registeredFieldId = cache_->register_field<FieldType>();
-            fieldIdMap_.emplace(fieldId, registeredFieldId);
-        }
-
         // Returns a single const DataBlock entry from the cache.
         // @oid the object ID to lookup
         // @fieldId the field to get (as FieldType) using local fieldId label.
@@ -92,6 +90,14 @@ namespace DataCache {
         }
         
     private:
+
+        // Create an entry in the DataCache, type is FieldType and
+        template<typename FieldType>
+        static void register_field(const std::size_t fieldId)
+        {
+            auto registeredFieldId = cache_->register_field<FieldType>();
+            fieldIdMap_.emplace(fieldId, registeredFieldId);
+        }
         
         // Lookup the DataCache registered field ID from the local <fieldId>
         // @fieldId the local field id to find.
@@ -116,6 +122,7 @@ namespace DataCache {
     // static data
     private:
         template<class AccessorBaseType> friend class Testing::UsingDataCacheInAccessor;
+        template<class AccessorBaseType, typename AccessorFieldType> friend class Details::FieldRegistrationLatch;
         
         static Details::DataCache* cache_;
         

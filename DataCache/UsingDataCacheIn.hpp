@@ -88,8 +88,6 @@ namespace DataCache {
         {
             return oid_;
         }
-        
-    private:
 
         // Create an entry in the DataCache, type is FieldType and
         template<typename FieldType>
@@ -98,6 +96,8 @@ namespace DataCache {
             auto registeredFieldId = cache_->register_field<FieldType>();
             fieldIdMap_.emplace(fieldId, registeredFieldId);
         }
+        
+    private:
         
         // Lookup the DataCache registered field ID from the local <fieldId>
         // @fieldId the local field id to find.

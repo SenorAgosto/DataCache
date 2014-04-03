@@ -1,4 +1,6 @@
 TODO: 
+- In DataBlock, move field registration from constructor to static member so there is no runtime overhead to field registration. Then Rename FieldRegistrationLatch to FieldRegistrator. Will this create a problem with static initialization order? 
+
 - Move functions out of UsingDataCacheIn declaration outside body.
 - Make RegisterFieldLatch an inline friend to UsingDataCacheIn so that UsingDataCacheIn can be made protected/private. 
 

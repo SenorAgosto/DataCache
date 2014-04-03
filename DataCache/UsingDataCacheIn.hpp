@@ -35,7 +35,7 @@ namespace DataCache {
         // @oid the object ID to lookup
         // @fieldId the field to get (as FieldType) using local fieldId label.
         template<typename FieldType>
-        static inline const FieldType& get(const std::size_t oid, const std::size_t fieldId)
+        static inline const FieldType& get_const(const std::size_t oid, const std::size_t fieldId)
         {
             return cache_->get<FieldType>(oid, registered_id(fieldId));
         }
@@ -71,7 +71,7 @@ namespace DataCache {
         }
         
         // Return a reference to our DataCache
-        static Details::DataCache& GetDataCache(void)
+        static inline Details::DataCache& GetDataCache(void)
         {
             return *cache_;
         }
@@ -84,7 +84,7 @@ namespace DataCache {
         }
         
         // Return our object's oid.
-        std::size_t oid(void) const
+        inline std::size_t oid(void) const
         {
             return oid_;
         }

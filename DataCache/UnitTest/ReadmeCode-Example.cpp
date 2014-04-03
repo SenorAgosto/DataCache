@@ -32,10 +32,9 @@ namespace {
 		// the only inconvenience is we have to use our OID to
 		// get the location of our fields we want to modify here.
 		auto& field1 = get<Fields::field_1_type>(oid(), Fields::field_1);
-		auto& field2 = get<Fields::field_2_type>(oid(), Fields::field_2);
+		auto& field2 = get_const<Fields::field_2_type>(oid(), Fields::field_2);
         
 		field1 += field2;
-		field2 /= 2;
     }
     
     TEST(verifyReadmeExampleCodeCompiles)

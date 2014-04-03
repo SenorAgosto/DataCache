@@ -20,9 +20,9 @@ This is a simple toolkit for implementing Data Oriented Designs in C++.
 	
     // Declare a type using the DataCache
     class MyObject
-        : public DataCache::UsingDataCacheIn<MyObject>
-        , public DataCache::DataBlock<MyObject, Fields::field_1, Fields::field_1_type>
-        , public DataCache::DataBlock<MyObject, Fields::field_2, Fields::field_2_type>
+        : public  DataCache::UsingDataCacheIn<MyObject>
+        , private DataCache::DataBlock<MyObject, Fields::field_1, Fields::field_1_type>
+        , private DataCache::DataBlock<MyObject, Fields::field_2, Fields::field_2_type>
     {
     public:
     	void Foo(void);
@@ -44,11 +44,10 @@ This toolkit allows us to mix paradigms easily. Given an object instance, you ca
 	{
 		// the only inconvenience is we have to use our OID to 
 		// get the location of our fields we want to modify here.
-		auto& field1 = get(oid(), Fields::field_1);
-		auto& field2 = get(oid(), Fields::field_2);
+		auto& field1 = get<Fields::field_1_type>(oid(), Fields::field_1);
+		auto& field2 = get<Fields::field_2_type>(oid(), Fields::field_2);
 
-		field1 += field2;
-		field2 /= 2;
+		// Do something useful with field1 and field2...
 	}
 
 Potentially, you could mix the member data between the data cache and unorganized heap as well, though we're not sure you really want to do that. If you really want to go that route, I'd recommend a related class with a has-a relationship to separate what is in the DataCache and what isn't.

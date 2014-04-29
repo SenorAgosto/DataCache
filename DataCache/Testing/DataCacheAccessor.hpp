@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 
 namespace DataCache { namespace Details {
     class DataCache;
@@ -13,6 +14,8 @@ namespace DataCache { namespace Testing {
         DataCacheAccessor(Details::DataCache& cache);
         void clear(void);
 
+        std::size_t size(void) const;
+        
     private:
         Details::DataCache& cache_;
     };

@@ -2,6 +2,7 @@
 #include <DataCache/Details/DataCache.hpp>
 #include <DataCache/Details/DefaultDataCache.hpp>
 #include <DataCache/Details/DataCacheSetter.hpp>
+#include <DataCache/Details/TagTypes.hpp>
 #include <DataCache/Exception/Exceptions.hpp>
 
 #include <unordered_map>
@@ -65,29 +66,33 @@ namespace DataCache {
         //
         // This can be called only once per program, and must
         // happen prior to any BaseType allocations.
-        static void SetDataCache(Details::DataCache& cache)
-        {
-            static Details::DataCacheSetter setter(cache_, cache);
-        }
+        static void SetDataCache(Details::DataCache& cache);
         
         // Return a reference to our DataCache
-        static inline Details::DataCache& GetDataCache(void)
-        {
-            return *cache_;
-        }
+        static inline Details::DataCache& GetDataCache(void);
 
     protected:
         // Add an entry in the DataCache for this object type.
-        UsingDataCacheIn()
-            : oid_(cache_->create_object<BaseType>())
-        {
-        }
+        UsingDataCacheIn();
+
+        // Create a DataCache reference using already existing cache entry.
+        UsingDataCacheIn(const std::size_t oid, Details::NoCreate);
+        
+        // Copy constructor which assigns the <oid_>
+        // based on existing oid.
+        UsingDataCacheIn(const UsingDataCacheIn& rhs);
+        
+        // Move constructor.
+        UsingDataCacheIn(UsingDataCacheIn&& rhs);
+        
+        // Assignment operator.
+        UsingDataCacheIn& operator=(const UsingDataCacheIn& rhs);
+
+        // Move Assignment operator.
+        UsingDataCacheIn& operator=(UsingDataCacheIn&& rhs);
         
         // Return our object's oid.
-        inline std::size_t oid(void) const
-        {
-            return oid_;
-        }
+        inline std::size_t oid(void) const;
 
         // Create an entry in the DataCache, type is FieldType and
         template<typename FieldType>
@@ -103,17 +108,7 @@ namespace DataCache {
         // @fieldId the local field id to find.
         //
         // @return the DataCache assigned field ID.
-        static std::size_t registered_id(std::size_t fieldId)
-        {
-            auto iter = fieldIdMap_.find(fieldId);
-            if(iter == fieldIdMap_.end())
-            {
-                throw Exception::AccessingUnRegisteredFieldId(fieldId);
-            }
-            
-            auto registeredFieldId = iter->second;
-            return registeredFieldId;
-        }
+        static std::size_t registered_id(std::size_t fieldId);
 
     // instance data
     private:
@@ -138,4 +133,80 @@ namespace DataCache {
     
     template<class BaseType>
     std::unordered_map<std::size_t, std::size_t> UsingDataCacheIn<BaseType>::fieldIdMap_;
+    
+
+    //static
+    template<class BaseType>
+    void UsingDataCacheIn<BaseType>::SetDataCache(Details::DataCache& cache)
+    {
+        static Details::DataCacheSetter setter(cache_, cache);
+    }
+    
+    //static
+    template<class BaseType>
+    inline Details::DataCache& UsingDataCacheIn<BaseType>::GetDataCache(void)
+    {
+        return *cache_;
+    }
+
+    
+    template<class BaseType>
+    UsingDataCacheIn<BaseType>::UsingDataCacheIn()
+        : oid_(cache_->create_object<BaseType>())
+    {
+    }
+    
+    template<class BaseType>
+    UsingDataCacheIn<BaseType>::UsingDataCacheIn(const std::size_t oid, Details::NoCreate)
+        : oid_(oid)
+    {
+    }
+    
+    template<class BaseType>
+    UsingDataCacheIn<BaseType>::UsingDataCacheIn(const UsingDataCacheIn<BaseType>& rhs)
+        : oid_(rhs.oid_)
+    {
+    }
+    
+    template<class BaseType>
+    UsingDataCacheIn<BaseType>::UsingDataCacheIn(UsingDataCacheIn<BaseType>&& rhs)
+        : oid_(std::forward<decltype(oid_)>(rhs.oid_))
+    {
+    }
+    
+    template<class BaseType>
+    UsingDataCacheIn<BaseType>& UsingDataCacheIn<BaseType>::operator=(const UsingDataCacheIn<BaseType>& rhs)
+    {
+        oid_ = rhs.oid_;
+        return *this;
+    }
+    
+    template<class BaseType>
+    UsingDataCacheIn<BaseType>& UsingDataCacheIn<BaseType>::operator=(UsingDataCacheIn<BaseType>&& rhs)
+    {
+        oid_ = std::forward<decltype(oid_)>(rhs.oid_);
+        return *this;
+    }
+    
+    template<class BaseType>
+    std::size_t UsingDataCacheIn<BaseType>::oid(void) const
+    {
+        return oid_;
+    }
+    
+    
+    // static
+    template<class BaseType>
+    std::size_t UsingDataCacheIn<BaseType>::registered_id(std::size_t fieldId)
+    {
+        auto iter = fieldIdMap_.find(fieldId);
+        if(iter == fieldIdMap_.end())
+        {
+            throw Exception::AccessingUnRegisteredFieldId(fieldId);
+        }
+        
+        auto registeredFieldId = iter->second;
+        return registeredFieldId;
+    }
+    
 }

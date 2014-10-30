@@ -6,8 +6,8 @@ source_group("Source" FILES ${implementation_files} ${interface_files})
 if(WIN32)
 
 else()
-	include_directories("/Volumes/proj/unittest++/")
-	set(UNITTEST++_LIBRARIES "/Volumes/proj/unittest++/libUnitTest++.a")
+	include_directories("/Volumes/austirg/homebrew/include/")
+	set(UNITTEST++_LIBRARIES "/Volumes/austirg/homebrew/lib/libUnitTest++.a")
 endif()
 
 add_executable(DataCache-UT ${implementation_files} ${interface_files})

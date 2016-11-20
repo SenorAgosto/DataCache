@@ -97,8 +97,8 @@ namespace {
         auto total = std::accumulate(accum_collection.begin(), accum_collection.end(), 0);
         CHECK_EQUAL(30, total);
         
-        const auto& object = accum_collection[0];
-        CHECK_EQUAL(10, object);
+        const auto object = accum_collection[0];
+        CHECK_EQUAL(10U, object);
     }
     
     TEST_FIXTURE(DataBlockCollectionFixture, verifyNonConstAndConstAtFunction)
@@ -112,8 +112,8 @@ namespace {
         auto total = std::accumulate(accum_collection.begin(), accum_collection.end(), 0);
         CHECK_EQUAL(30, total);
         
-        const auto& object = accum_collection.at(0);
-        CHECK_EQUAL(10, object);
+        const auto object = accum_collection.at(0);
+        CHECK_EQUAL(10U, object);
     }
     
     TEST_FIXTURE(DataBlockCollectionFixture, verifyFreeBeginAndEndFunctions)

@@ -3,6 +3,9 @@
 
 namespace DataCache { namespace Details {
 
+#pragma clang diagonstic push 
+#pragma clang diagnostic ignored "-Wunused-parameter"
+    
     void CheckNonDuplicateOidWhenInDebug(const std::size_t oid, const std::size_t blockSize)
     {
         #ifdef DEBUG
@@ -23,4 +26,6 @@ namespace DataCache { namespace Details {
         #endif
     }
 
+#pragma clang diagnostic pop
+    
 }}

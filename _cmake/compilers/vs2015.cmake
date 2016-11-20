@@ -1,6 +1,5 @@
-if(WIN32)
-	add_definitions(
-		/D_CRT_SECURE_NO_WARNINGS 	# currently calling std::gmtime in wield/logging/Logging.h
+add_definitions(
+		#/D_CRT_SECURE_NO_WARNINGS
 		/DNOMINMAX	#disable creation of min/max macro
 		/EHa
 		/FC			#use full paths in error messages, __FILE__
@@ -9,6 +8,7 @@ if(WIN32)
 		/Zi         # Program Database
 		
 		# C++ Disabled warnings
+		/wd4068		# ignore unknown pragmas (for other compilers)
 		/wd4710		# function not inlined
 		/wd4820		# padding added to the end of data structure.
 		/wd4514		# unreferenced inline function removed.
@@ -17,13 +17,3 @@ if(WIN32)
 		/wd4640		# construction of local static objects is not thread-safe.
 		/wd4668		# preprocessor directive not defined, this is normal.
 	)
-else()
-	# currently assumes we are building on MacOSX using clang++.
-	add_definitions(
-			-std=c++11		# use c++11 features
-			-stdlib=libc++  # use the good runtime
-			#-Weverything 	# Turn on all warnings 
-			#-Werror			# warnings as errors
-	)
-	
-endif()

@@ -1,5 +1,5 @@
 #include <UnitTest++/UnitTest++.h>
-#include <DataCache/Source/DataCacheOid.hpp>
+#include <DataCache/src/DataCacheOid.hpp>
 
 #include <DataCache/Testing/OidGeneratorResetter.hpp>
 

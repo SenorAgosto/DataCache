@@ -2,7 +2,7 @@
 
 namespace DataCache { namespace Details {
   
-    DataCacheSetter::DataCacheSetter(DataCache* destination, DataCache& source)
+    DataCacheSetter::DataCacheSetter(DataCache*& destination, DataCache& source)
     {
         destination = &source;
     }

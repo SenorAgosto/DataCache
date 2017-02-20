@@ -11,6 +11,6 @@ namespace DataCache { namespace Details {
     class DataCacheSetter
     {
     public:
-        DataCacheSetter(DataCache* destination, DataCache& source);
+        DataCacheSetter(DataCache*& destination, DataCache& source);
     };
 }}

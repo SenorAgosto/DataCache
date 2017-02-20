@@ -2,6 +2,7 @@
 #include <DataCache/Details/DataBlockCollection.hpp>
 #include <DataCache/Exception/Exceptions.hpp>
 
+#include <algorithm>
 #include <cstddef>
 #include <memory>
 #include <unordered_map>

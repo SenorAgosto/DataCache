@@ -1,4 +1,4 @@
-#include <UnitTest++/UnitTest++.h>
+#include "./platform/UnitTestSupport.hpp"
 
 #include <DataCache/ObjectCounter.hpp>
 #include <DataCache/Testing/ObjectCounterResetter.hpp>

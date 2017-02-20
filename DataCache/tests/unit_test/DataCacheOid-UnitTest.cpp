@@ -1,4 +1,4 @@
-#include <UnitTest++/UnitTest++.h>
+#include "./platform/UnitTestSupport.hpp"
 #include <DataCache/src/DataCacheOid.hpp>
 
 #include <DataCache/Testing/DataCacheOidResetter.hpp>

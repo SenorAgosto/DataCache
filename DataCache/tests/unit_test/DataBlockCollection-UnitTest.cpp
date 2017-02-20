@@ -3,6 +3,7 @@
 #include <DataCache/Details/DataBlockCollection.hpp>
 #include <DataCache/Exception/Exceptions.hpp>
 
+#include <algorithm>
 #include <cstdint>
 #include <numeric>
 #include <vector>

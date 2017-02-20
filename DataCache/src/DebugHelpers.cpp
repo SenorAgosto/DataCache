@@ -13,6 +13,10 @@ namespace DataCache { namespace Details {
         {
             throw Exception::OidOutOfRange(oid);
         }
+        #else
+        // Suppress Warnings
+        (void)blockSize;
+        (void)oid;
         #endif
     }
     
@@ -23,6 +27,10 @@ namespace DataCache { namespace Details {
         {
             throw Exception::OidOutOfRange(oid);
         }
+        #else 
+        // Suppress Warnings
+        (void)blockSize;
+        (void)oid;
         #endif
     }
 

@@ -1,4 +1,5 @@
-#include <UnitTest++/UnitTest++.h>
+#include "./platform/UnitTestSupport.hpp"
+
 #include <DataCache/Details/DataBlockCollection.hpp>
 #include <DataCache/Exception/Exceptions.hpp>
 

@@ -1,4 +1,5 @@
-#include <UnitTest++/UnitTest++.h>
+#include "./platform/UnitTestSupport.hpp"
+
 #include <DataCache/DataCache.hpp>
 #include <DataCache/Testing/DataCacheAccessor.hpp>
 

@@ -4,13 +4,6 @@ TODO:
 - Move functions out of UsingDataCacheIn declaration outside body.
 - Make RegisterFieldLatch an inline friend to UsingDataCacheIn so that UsingDataCacheIn can be made protected/private. 
 
-- Ensure we can only call SetDataCache once
-
-- Remove DataCache&, in UsingDataCacheIn add static set/get functions for the active data cache.
-  Then I won't need to pass an instance to DataBlocks. Make a static DataCache that is the
-  default. If client code wants to change the DataCache being used (as in they want more than 
-  one) then they'll have to change. 
-
 - Create Compile Time counter to implement DataBlockId. Each time we instantiate a DataBlock<> object it has a new unique compile time "field ID". This field ID will be used to register the field with the DataCache. 
 
 - Move the mapping of local field ID to registered field ID to compile time.

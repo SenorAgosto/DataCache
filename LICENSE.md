@@ -1,4 +1,4 @@
-Copyright (c) 2014, Austin Gilbert (ceretullis@gmail.com)
+Copyright (c) 2014-2019, Breaking Robots Intellectual Property, LLC (breakingrobots@protonmail.com)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -10,15 +10,15 @@ modification, are permitted provided that the following conditions are met:
    documentation and/or other materials provided with the distribution.
 3. All advertising materials mentioning features or use of this software
    must display the following acknowledgement:
-   This product includes software developed by the author Austin Gilbert.
+   This product includes software developed by the author Breaking Robots Intellectual Property, LLC.
 4. Neither the name of the author nor the
    names of its contributors may be used to endorse or promote products
    derived from this software without specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY Austin Gilbert ''AS IS'' AND ANY
+THIS SOFTWARE IS PROVIDED BY Breaking Robots Intellectual Property, LLC ''AS IS'' AND ANY
 EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL Austin Gilbert BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL Breaking Robots Intellectual Property, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
